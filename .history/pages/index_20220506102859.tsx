@@ -7,9 +7,9 @@ const Home: NextPage = () => {
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
 
-    const { signIn } = useContext(AuthContext)
+    const {} = useContext(AuthContext)
 
-  async function handleSubmit(event: FormEvent) {
+  function handleSubmit(event: FormEvent) {
     event.preventDefault(); // para page continua na msm page
 
     const data = {
@@ -17,7 +17,7 @@ const Home: NextPage = () => {
       password,
     }
 
-    await signIn(data)
+    console.log(data)
   }
 
   return (
