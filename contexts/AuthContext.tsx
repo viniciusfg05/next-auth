@@ -1,7 +1,7 @@
 import Router from "next/router";
 import { createContext, PropsWithChildren, ReactNode, useEffect, useState } from "react";
 import { api } from "../services/api";
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie, parseCookies, destroyCookie } from 'nookies'
 
 //data a serem salvo
 interface SingInCredentials {
@@ -25,6 +25,13 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
+export function signOut() {
+  destroyCookie(undefined, "nextauth.token" )
+  destroyCookie(undefined, "nextauth.refreshToken" )
+
+  Router.push('/')
+}
+
 
 export const AuthContext = createContext({} as AuthContextData)
 
@@ -43,6 +50,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         setUser({ email, permissions, roles })
       })
+      .catch(() => {
+        if(process.browser) {
+          //variavel global true e false, diz se a função ta sendo executada no browser ou não 
+          signOut();
+        }
+      })
     }
   }, [])
 
@@ -58,10 +71,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
       
       const { token, refreshToken, permissions, roles } = response.data 
 
-      setCookie( undefined, 'nextauth.token', token), {
-         maxAge: 60 * 25 * 30, // 30 dias  //tempo que eu quero guardar o dado
-         path: '/', //qual endereço vai ter acesso, ('/' todos os site vai ter acesso )
-      } //1° - contexto da req (undefined) sempre que a acão é pelo lado do browser e SSG, 2° nome do cookie, 3° valor do token, 4° informações add
+      setCookie( undefined, 'nextauth.token', token, {
+        maxAge: 60 * 25 * 30, // 30 dias  //tempo que eu quero guardar o dado
+        path: '/', //qual endereço vai ter acesso, ('/' todos os site vai ter acesso )
+      }) //1° - contexto da req (undefined) sempre que a acão é pelo lado do browser e SSG, 2° nome do cookie, 3° valor do token, 4° informações add
+
       setCookie( undefined, 'nextauth.refreshToken', refreshToken, {
         maxAge: 60 * 25 * 30, // 30 dias  //tempo que eu quero guardar o dado
         path: '/', //qual endereço vai ter acesso, ('/' todos os site vai ter acesso )
