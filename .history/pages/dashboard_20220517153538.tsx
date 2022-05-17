@@ -17,7 +17,7 @@ export default function dashboard() {
     <>
       <h1>dashboard: {user?.email} </h1>
 
-      <Cam permissions={['metrics.list']}>
+      <Cam>
         <div>Metricas</div>
       </Cam>
     </>

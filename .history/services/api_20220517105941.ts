@@ -3,7 +3,6 @@ import { request } from "https";
 import { GetServerSidePropsContext } from "next";
 import { parseCookies, setCookie } from "nookies";
 import { signOut } from "../contexts/AuthContext";
-import { AuthTokenError } from "./errors/AuthTokenError";
 
 
 let isRefreshing = false;
@@ -42,6 +41,8 @@ export function setapApiClient(ctx:  Context = undefined) {
         if(!isRefreshing) {
           isRefreshing = true
 
+          console.log('refresh')
+  
           api.post('/refresh', {
             refreshToken,
           }).then(response => {
@@ -94,9 +95,6 @@ export function setapApiClient(ctx:  Context = undefined) {
         if(typeof window !== 'undefined') {
           //variavel global true e false, diz se a função ta sendo executada no browser ou não 
           signOut();
-        } else {
-
-          return Promise.reject(new AuthTokenError())
         }
       }
     }

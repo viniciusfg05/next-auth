@@ -1,22 +1,13 @@
 import axios, { AxiosError } from "axios";
 import { request } from "https";
-import { GetServerSidePropsContext } from "next";
 import { parseCookies, setCookie } from "nookies";
 import { signOut } from "../contexts/AuthContext";
-import { AuthTokenError } from "./errors/AuthTokenError";
 
 
 let isRefreshing = false;
 let failedRequestsQueue = [] //salva as req que falharem para serem executadas novamente após o refresh
 
-type Context = undefined | GetServerSidePropsContext;
-/* (alias) setapApiClient(ctx: undefined): AxiosInstance
-import setapApiClient
-
-para evitar o erro de tipagem no arquivo apiClinte quando o export setapApiClient(ctx: undefined)
-*/
-
-export function setapApiClient(ctx:  Context = undefined) {
+export function setapApiClient(ctx: undefined) {
   let cookies = parseCookies(ctx)
 
   const api = axios.create({
@@ -33,7 +24,7 @@ export function setapApiClient(ctx:  Context = undefined) {
     if(error.response.status === 401) {
       if(error.response.data?.code === 'token.expired') {
         //renovar token
-        cookies = parseCookies(ctx); //recupera o token do cooki e
+        cookies = parseCookies(); //recupera o token do cooki e
   
         const { 'nextauth.refreshToken': refreshToken } = cookies;
         const originalConfig = error.config// todas a configuração do backend - rota que chame, quais paramentro, callback, oq deveria acontecer apos a req ser feita e tudo mais 
@@ -41,18 +32,18 @@ export function setapApiClient(ctx:  Context = undefined) {
         //se ainda não estive executando o refresh token não estiver
         if(!isRefreshing) {
           isRefreshing = true
-
+  
           api.post('/refresh', {
             refreshToken,
           }).then(response => {
             const { token } = response.data; //novo token
     
-            setCookie( ctx, 'nextauth.token', token, {
+            setCookie( undefined, 'nextauth.token', token, {
               maxAge: 60 * 25 * 30, // 30 dias  //tempo que eu quero guardar o dado
               path: '/', //qual endereço vai ter acesso, ('/' todos os site vai ter acesso )
             }) //1° - contexto da req (undefined) sempre que a acão é pelo lado do browser e SSG, 2° nome do cookie, 3° valor do token, 4° informações add
             
-            setCookie( ctx, 'nextauth.refreshToken', response.data.refreshToken, {
+            setCookie( undefined, 'nextauth.refreshToken', response.data.refreshToken, {
              maxAge: 60 * 25 * 30, // 30 dias  //tempo que eu quero guardar o dado
              path: '/', //qual endereço vai ter acesso, ('/' todos os site vai ter acesso )
             })
@@ -94,9 +85,6 @@ export function setapApiClient(ctx:  Context = undefined) {
         if(typeof window !== 'undefined') {
           //variavel global true e false, diz se a função ta sendo executada no browser ou não 
           signOut();
-        } else {
-
-          return Promise.reject(new AuthTokenError())
         }
       }
     }

@@ -9,6 +9,10 @@ import { withSSRAuth } from "../utils/withSSRAuth"
 export default function dashboard() {
   const { user } = useContext(AuthContext)
 
+  const userCamSeeMetrics = useCam({
+    roles: ['editor ']
+  })
+
   useEffect(() => {
     api.get('/me').then(res => console.log(res))
   }, [] ) 
@@ -17,7 +21,7 @@ export default function dashboard() {
     <>
       <h1>dashboard: {user?.email} </h1>
 
-      <Cam permissions={['metrics.list']}>
+      <Cam>
         <div>Metricas</div>
       </Cam>
     </>

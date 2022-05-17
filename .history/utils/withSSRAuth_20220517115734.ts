@@ -23,20 +23,13 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>) {
             destroyCookie(ctx, "nextauth.token")
             destroyCookie(ctx, "nextauth.refreshToken")
             
-            return {
-              redirect: {
-                destination: `/`,
-                permanent: false,
-              },
-            };
-          }
-        
-          return {
-            redirect: {
-              destination: `/`,
-              permanent: false,
-            },
-          }
+              return {
+                redirect: {
+                  destination: '/',
+                  permanent: false
+                }
+              }
+            }
         }
     }
 

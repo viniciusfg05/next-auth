@@ -25,17 +25,10 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>) {
             
             return {
               redirect: {
-                destination: `/`,
-                permanent: false,
-              },
-            };
-          }
-        
-          return {
-            redirect: {
-              destination: `/`,
-              permanent: false,
-            },
+                destination: '/',
+                permanent: false
+              }
+            }
           }
         }
     }

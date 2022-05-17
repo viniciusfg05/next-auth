@@ -42,6 +42,8 @@ export function setapApiClient(ctx:  Context = undefined) {
         if(!isRefreshing) {
           isRefreshing = true
 
+          console.log('refresh')
+  
           api.post('/refresh', {
             refreshToken,
           }).then(response => {

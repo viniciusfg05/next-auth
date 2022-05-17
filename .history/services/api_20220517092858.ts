@@ -3,20 +3,14 @@ import { request } from "https";
 import { GetServerSidePropsContext } from "next";
 import { parseCookies, setCookie } from "nookies";
 import { signOut } from "../contexts/AuthContext";
-import { AuthTokenError } from "./errors/AuthTokenError";
 
 
 let isRefreshing = false;
 let failedRequestsQueue = [] //salva as req que falharem para serem executadas novamente após o refresh
 
 type Context = undefined | GetServerSidePropsContext;
-/* (alias) setapApiClient(ctx: undefined): AxiosInstance
-import setapApiClient
 
-para evitar o erro de tipagem no arquivo apiClinte quando o export setapApiClient(ctx: undefined)
-*/
-
-export function setapApiClient(ctx:  Context = undefined) {
+export function setapApiClient(ctx: Context = undefined) {
   let cookies = parseCookies(ctx)
 
   const api = axios.create({
@@ -41,7 +35,7 @@ export function setapApiClient(ctx:  Context = undefined) {
         //se ainda não estive executando o refresh token não estiver
         if(!isRefreshing) {
           isRefreshing = true
-
+  
           api.post('/refresh', {
             refreshToken,
           }).then(response => {
@@ -94,9 +88,6 @@ export function setapApiClient(ctx:  Context = undefined) {
         if(typeof window !== 'undefined') {
           //variavel global true e false, diz se a função ta sendo executada no browser ou não 
           signOut();
-        } else {
-
-          return Promise.reject(new AuthTokenError())
         }
       }
     }

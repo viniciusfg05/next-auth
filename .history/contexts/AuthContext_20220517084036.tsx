@@ -1,8 +1,7 @@
 import Router from "next/router";
 import { createContext, PropsWithChildren, ReactNode, useEffect, useState } from "react";
-import { setapApiClient } from "../services/api";
+import { api } from "../services/api";
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
-import { api } from "../services/apiClient";
 
 //data a serem salvo
 interface SingInCredentials {

@@ -6,18 +6,12 @@ import { setapApiClient } from "../services/api"
 import { api } from "../services/apiClient"
 import { withSSRAuth } from "../utils/withSSRAuth"
 
-export default function dashboard() {
-  const { user } = useContext(AuthContext)
-
-  useEffect(() => {
-    api.get('/me').then(res => console.log(res))
-  }, [] ) 
-
+export default function Metrics() {
   return (
     <>
-      <h1>dashboard: {user?.email} </h1>
+      <h1>metrics</h1>
 
-      <Cam permissions={['metrics.list']}>
+      <Cam>
         <div>Metricas</div>
       </Cam>
     </>

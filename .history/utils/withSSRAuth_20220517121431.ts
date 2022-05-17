@@ -16,13 +16,12 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>) {
         }
 
         try {
-          return await fn(ctx) 
+          return await fn(ctx);
         } catch (err) {
-          if(err instanceof AuthTokenError) {
-            //se o erro for do tipo AuthTokenError = True, se não false
-            destroyCookie(ctx, "nextauth.token")
-            destroyCookie(ctx, "nextauth.refreshToken")
-            
+          if (err instanceof AuthTokenError) {
+            destroyCookie(ctx, `valoriza.token`);
+            destroyCookie(ctx, `valoriza.refreshToken`);
+        
             return {
               redirect: {
                 destination: `/`,
@@ -36,8 +35,7 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>) {
               destination: `/`,
               permanent: false,
             },
-          }
-        }
+          };
     }
 
 }
