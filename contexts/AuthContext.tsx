@@ -17,7 +17,8 @@ interface  User {
 }
 
 interface AuthContextData {
-  signIn(credentials: SingInCredentials): Promise<void>;
+  signIn: (credentials: SingInCredentials) => Promise<void>;
+  signOut: () => void;
   user: User;
   isAuthenticated: boolean;
 }
@@ -30,16 +31,33 @@ export function signOut() {
   destroyCookie(undefined, "nextauth.token" )
   destroyCookie(undefined, "nextauth.refreshToken" )
 
+  authChannel.postMessage('signOut')
+
   Router.push('/')
 }
 
 
 export const AuthContext = createContext({} as AuthContextData)
 
+let authChannel: BroadcastChannel 
+
 export function AuthProvider({ children }: AuthProviderProps) {
   //salvar os dados do usuario
   const [user, setUser] = useState<User>()
   const isAuthenticated = !! user; // se tiver vazio vai ser false se tiver dado retorna vdd
+
+  useEffect(() => {
+    authChannel = new BroadcastChannel('auth')
+
+    authChannel.onmessage = (message) => {
+      switch (message.data) {
+        case 'signOut': signOut()
+          break;
+        default:
+          break;
+      }
+    }
+  }, [])
 
   //Revalida os dados quando acessado novamento
   useEffect(() => {
@@ -92,6 +110,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       api.defaults.headers['Authorization'] = `Bearer ${token}`
 
       Router.push('/dashboard')
+
+      authChannel.postMessage('signIn')
     } catch (err){
       console.log(err),
       console.log("error")
@@ -99,7 +119,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, isAuthenticated, user }}>
+    <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, user }}>
       { children }
     </AuthContext.Provider>
   )

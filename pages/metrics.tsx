@@ -11,7 +11,6 @@ export default function Metrics() {
 
 export const getServerSideProps = withSSRAuth(async (ctx) => {
   const apiClient = setapApiClient(ctx);
-  
   const response = await apiClient.get('/me');
 
   console.log(response.data)
@@ -19,4 +18,7 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
   return {
     props: {}
   }
+}, { 
+  permissions: ['metrics.list3'],
+  roles: ['administrator']
 })

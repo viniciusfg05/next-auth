@@ -1,34 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+  Projeto do modulo de Autenticação e Autorização Ignite
+</div>
 
-## Getting Started
+## Descrição do Projeto
 
-First, run the development server:
+Implementação de autenticação e autorização, com todas as tratativas de erros e de permissões de acordo com as roles de cada usuario
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+[Layout do Figma](<https://www.figma.com/file/rj4LHsx3aqVUFDU6zOAVfd/Desafio-1-M%C3%B3dulo-4-ReactJS-(Copy)?node-id=14%3A135>)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✅ Status do Projeto
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+🚧 React Select 🚀 Em construção... 🚧
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## ✅ Features
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- [x] Verificações de permissões dos usuarios
+- [x] Autenticação 
 
-## Learn More
+## ✅ Tecnologias utilizadas
 
-To learn more about Next.js, take a look at the following resources:
+As seguintes ferramentas foram usadas na construção do projeto:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [TypeScript](https://www.typescriptlang.org/)
+- [jwt-decode](https://www.npmjs.com/package/jwt-decode)
+- [nookies](http://www.nocookie.com/)
+- [Next JS](https://nextjs.org/)
+- [Axios](https://axios-http.com/ptbr/docs/intro)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Autor
 
-## Deploy on Vercel
+<a href="https://avatars.githubusercontent.com/u/68232658?v=4">
+ <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/68232658?v=4" width="100px;" alt=""/>
+ <br />
+ <sub><b>Vinicius Ferreira</b></sub></a>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Feito com ❤️ por Vinicius Ferreira 👋🏽 Entre em contato!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Linkedin](http://www.linkedin.com/in/viniciusfg05)
