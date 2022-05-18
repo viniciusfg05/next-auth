@@ -6,8 +6,6 @@
 
 Implementação de autenticação e autorização, com todas as tratativas de erros e de permissões de acordo com as roles de cada usuario
 
-[Layout do Figma](<https://www.figma.com/file/rj4LHsx3aqVUFDU6zOAVfd/Desafio-1-M%C3%B3dulo-4-ReactJS-(Copy)?node-id=14%3A135>)
-
 ## ✅ Status do Projeto
 
 🚧 React Select 🚀 Em construção... 🚧
